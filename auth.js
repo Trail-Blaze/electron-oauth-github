@@ -1,8 +1,9 @@
 require('isomorphic-fetch')
+const crypto = require("crypto");
 const {createOAuthWindow} = require('./windowsManager')
 
 const getAuthorizationCode = async ({clientId, redirectUri, scope}) => {
-    const randomState = 'asdfghjkl' // TODO: make it really random....
+    const randomState = crypto.randomBytes(20).toString('hex').toString();
     const authorizationCodeRequestGithubUrl =  `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${randomState}`
 
     return new Promise((resolve, reject) => {
@@ -68,12 +69,12 @@ const getAccessToken = async ({clientId, redirectUri, scope, clientSecret}) => {
         })
             .then(response => response.json())
             .catch(error => {
-                console.log("error happened....")
+                console.log("ERROR!\n")
                 console.log(error)
                 return error
             })
     } catch (error) {
-        console.log("error happened")
+        console.log("ERROR!\n")
         console.log(error)
         return error
     }
