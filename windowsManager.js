@@ -1,4 +1,6 @@
-const {BrowserWindow} = require("electron")
+// const {BrowserWindow} = require("electron")
+const electron = require("electron")
+const BrowserWindow = electron.remote.BrowserWindow;
 
 const createOAuthWindow = () => {
     return new BrowserWindow({
